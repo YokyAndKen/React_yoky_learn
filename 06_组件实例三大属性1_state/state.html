@@ -26,16 +26,32 @@
           this.state = {
             isHot:true,
           }
+          this.changeWeather = this.changeWeather.bind(this)
         }
         render(){
-          console.log(this)
+          console.log(this)   // 这里的this就是weather这个实例化对象本身
           // 读取状态
-          return <h1>今天天气很{this.state.isHot ? '炎热' : '凉爽'}</h1>
+          return <h1 id="title" onClick={this.changeWeather}>name:{this.state.isHot ? 'lyx' : 'yoky'}</h1>
+        }
+
+        // changeWeather放在了Weather的原型对象上，供实例使用
+        // 由于changeWeather是作为onClick的回调，所以不是通过实例调用的，是直接调用
+        // 类中定义的方法默认开启了局部的严格模式，所以changeWeather中的this为undefined
+        changeWeather() {
+          console.log(this)
+          // this.state.isHot = !this.state.isHot
+          // console.log(this.state.isHot)
         }
       }
 
       // 2.渲染组件到页面
       ReactDOM.render(<Weather/>, document.getElementById('test'));
+
+      function changeWeather() {
+        alert('此处修改isHot的值')
+        const {isHot} = this.state
+        
+      }
 
     </script> 
 </body>
