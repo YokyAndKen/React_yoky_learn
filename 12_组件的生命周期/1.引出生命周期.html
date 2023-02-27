@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <!-- “容器” -->
+    <div id="test"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../React-js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../React-js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将JSX转为JS -->
+    <script src="../React-js/babel.min.js"></script>
+    <!-- 引入prop-types 用于对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../React-js/prop-types.js"></script>
+
+    <script type="text/babel">
+
+      // 挂载  mount
+      // 卸载  unmount
+
+
+      // 创建组件
+      class Life extends React.Component{
+
+        state = {opacity: 0.5}
+
+        death = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+        } 
+
+        // 组件挂载
+        componentDidMount() {
+            this.timer = setInterval(() => {
+              let {opacity} = this.state
+              if(opacity <= 0) {
+                opacity = 1
+              } else {
+                opacity -= 0.1
+              }
+              this.setState({opacity})
+            }, 200)          
+        }
+
+        // 组件将要卸载
+        componentWillUnmount() {
+          // 清除定时器
+          clearInterval(this.timer)
+        }
+
+        render(){
+          return(
+            <div>
+              <h2 style={{opacity: this.state.opacity}}>Life - Test</h2>
+              <button onClick={this.death}>controler</button>
+            </div>
+          )
+        }
+      }
+
+      // 渲染组件
+      ReactDOM.render(<Life/>, document.getElementById('test'))
+    </script>
+</body>
+</html>

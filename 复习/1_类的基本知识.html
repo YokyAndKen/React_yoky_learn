@@ -33,12 +33,12 @@
     class Student extends Person {
       // 构造器方法
       constructor(name, age, grade) {
-        super(name, age);
+        super(name, age);  // 必须调用，不调用就会报错，不允许不写super，但是如果不写constructor就不用写super了 super必须放在其他的之前
         this.grade = grade;
       }
       // 一般方法
       study() {
-        console.log(`${this.name} is studying`);
+        console.log(`${this.name} is studying in ${this.grade}`);
       }
     }
 
@@ -46,6 +46,24 @@
     s1.say();
     s1.study();
     console.log(s1)
+
+
+    class Car {
+      constructor(name, price) {
+        this.name = name
+        this.price = price
+        
+      }
+      // 类中可以直接写赋值语句
+      // 如下代码的含义是，给Car的实例对象添加一个属性，名为a，值为1
+      a = 1
+      wheel = 4
+    }
+
+    const c1 = new Car('benz', 200)
+    const c2 = new Car('audi', 300)
+
+    console.log(c1, c2)
 
     /*
       总结：

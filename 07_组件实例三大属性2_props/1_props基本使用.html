@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <!-- “容器” -->
+    <div id="test1"></div>
+    <div id="test2"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../React-js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../React-js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将JSX转为JS -->
+    <script src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+      // 创建组件
+      class Person extends React.Component{
+        render(){
+          // console.log(this)  // 这里的this是组件的实例对象
+          return(
+            <ul>
+              <li>姓名:{this.props.name}</li>
+              <li>性别:{this.props.sex}</li>
+              <li>年龄:{this.props.age + 1}</li>
+            </ul>
+          )
+        }
+      }
+      // 渲染组件到页面
+      ReactDOM.render(<Person name="lyx" age={23} sex="female"/>, document.getElementById('test1'));
+
+
+      // 批量传递props
+      const k = {name:'ken',age:23,sex:'male'}
+      ReactDOM.render(<Person {...k}/>, document.getElementById('test2'));
+    </script>
+</body>
+</html>
