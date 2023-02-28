@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id = "div">
+
+    </div>
+</body>
+
+<!-- 引入依赖 ,引入的时候，必须就按照这个步骤-->
+<script src="../React-js/react.development.js" type="text/javascript"></script>
+<script src="../React-js/react-dom.development.js" type="text/javascript"></script>
+
+<script src="../React-js/babel.min.js"></script>
+
+<!--引入对于组件标签的限制-->
+<script src="../React-js/prop-types.js"></script>
+
+<!-- 
+
+    1.react/vue中的key有什么作用？（key的内部原理是什么）
+    2.为什么遍历列表时，key最好不要用index
+
+    1.虚拟DOM中key的作用：
+      1）简单地说：key是虚拟DOM对象的标识，在更新显示时key起着极其重要的作用
+
+      2）详细的说：当状态中的数据发生变化时，react会根据【新数据】生成【新的虚拟DOM】，随后react进行【新虚拟DOM】与【旧虚拟DOM】的diff比较，比较规则如下：
+
+          a. 旧虚拟DOM中找到了与新虚拟DOM相同的key:
+            ① 若虚拟DOM中内容没变，直接使用之前的真实DOM
+            ② 若虚拟DOM中内容变了，则生成新的真实DOM，随后替换掉页面中之前的真实DOM
+
+          b. 旧虚拟DOM中未找到与新虚拟DOM相同的key
+            根据新数据创建新的真实DOM，随后渲染到页面
+
+    2.用index作为key可能会引发的问题：
+          ① 若对数据进行：逆序添加、逆序删除等破坏顺序操作：
+                会产生没有必要的真实DOM更新  ===>  界面效果没问题，但效率低
+          ② 如果结构中还包含输入类DOM
+                会产生错误DOM更新   ===>   界面有问题
+          ③ 注意！如果不存在对数据的逆序添加、逆序删除等破坏顺序操作，仅用于渲染列表用于展示，使用index作为key是没有问题的
+
+    3.开发中如何选择key？
+          ① 最好使用每条数据的唯一标识作为key，如id、手机号、身份证号、学号等唯一值
+          ② 如果确定只是简单的展示数据，用index也是可以的
+ -->
+
+<script type="text/babel">
+    class Person extends React.Component{
+        state = {
+            person:[
+                {id:1,name:"张三",age:18},
+                {id:2,name:"李四",age:19}
+            ]
+        }
+
+        addObject = () =>{
+            let {person} = this.state;
+            const p = {id:(person.length+1),name:"王五",age:20};
+            this.setState({person:[p,...person]});
+        }
+        
+        render() {
+            return (
+                <div>
+                    <button onClick={this.addObject}>点击增加对象</button>
+                    <ul>
+                        {
+                            this.state.person.map((p,index)=>{
+                               return <li key = {p.id}>{p.name}</li>
+                            })
+                        }
+                    </ul>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Person />,document.getElementById("div"));
+</script>
+</html>

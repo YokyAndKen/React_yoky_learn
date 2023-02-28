@@ -21,6 +21,24 @@
 
     <!-- 
       所有will相关的钩子都要加上UNSAFE_前缀,除了componentWillUnMount
+
+      
+      1.初始化阶段：由ReactDOM.render()触发---初次渲染
+          ① constructor()
+          ② getDerivedStateFromProps
+          ③ render()
+          ④ componentDidMount()   ====>常用
+                    一般在这个钩子中做一些初始化的事,如开启定时器,发送网络请求,订阅消息
+      2.更新阶段：由组件内部this.setState()或父组件重新render触发
+          ① getDerivedStateFromProps
+          ② shouldComponentUpdate()
+          ③ render()              ====>必须用
+          ④ getSnapshotBeforeUpdate
+          ⑤ componentDidUpdate()
+      3.卸载组件：由ReactDOM.unmountComponentAtNode()触发
+          ① componentWillUnmount() ====>常用
+                    一般在这个钩子中做一些收尾的事,如关闭定时器,取消消息订阅
+      
      -->
 
 
@@ -50,8 +68,22 @@
       }
 
       // 组件将要挂载
-      UNSAFE_componentWillMount() {
-        console.log('Count-componentWillMount')
+      // UNSAFE_componentWillMount() {
+      //   console.log('Count-componentWillMount')
+      // }
+
+      // 新生命周期钩子
+      // 若state的值在任何时候都取决于props，那么可以使用这个钩子
+      static getDerivedStateFromProps (props, state) {
+        console.log('Count-getDerivedStateFromProps', props, state)
+        return null
+      }
+
+      // 快照
+      // 利用快照钩子可以在页面更新之前保存原来的数据
+      getSnapshotBeforeUpdate() {
+        console.log('Count-getSnapshotBeforeUpdate')
+        return 'lyx-test'
       }
 
       // 组件挂载完毕
@@ -71,8 +103,14 @@
       }
 
       // 组件将要更新的钩子
-      UNSAFE_componentWillUpdate() {
-        console.log('Count-componentWillUpdate')
+      // UNSAFE_componentWillUpdate() {
+      //   console.log('Count-componentWillUpdate')
+      // }
+
+      // 组件更新完毕
+      // a==>prev props  b==>prev state   都是更新前的数据状态
+      componentDidUpdate (a, b, snapshotValue) {
+        console.log('Count-componentDidUpdate', a, b, snapshotValue)
       }
 
       render() {
@@ -111,9 +149,9 @@
       class B extends React.Component{
 
       // 组件将要接收新的props的钩子
-      UNSAFE_componentWillReceiveProps(props){
-        console.log('B-componentWillReceiveProps', props)
-      }
+      // UNSAFE_componentWillReceiveProps(props){
+      //   console.log('B-componentWillReceiveProps', props)
+      // }
 
       render() {
         return(
@@ -126,7 +164,7 @@
       }
       }
 
-      ReactDOM.render(<A/>, document.getElementById('test'))
+      ReactDOM.render(<Count count="199"/>, document.getElementById('test'))
 
     </script>
 </body>
