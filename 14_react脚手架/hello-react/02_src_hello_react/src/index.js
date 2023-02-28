@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // 引入App组件
-import App from './App';
+import App from './App.js';
 
 
 // 渲染App到页面
