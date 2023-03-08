@@ -5,6 +5,13 @@ import List from './components/List/index'
 
 export default class App extends Component {
 
+  state = {
+    users: [],
+    isFirst: true,
+    isLoading: false,
+    err: ''
+  }
+
   updateAppState = (stateObj) => {
     this.setState(stateObj)
   }

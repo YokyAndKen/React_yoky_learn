@@ -2,16 +2,8 @@ import React, { Component } from 'react'
 import './index.css'
 
 export default class List extends Component {
-
-  state = {
-    users: [],
-    isFirst: true,
-    isLoading: false,
-    err: ''
-  }
-
   render() {
-    const {users,isFirst,isLoading,err} = this.state
+    const {users,isFirst,isLoading,err} = this.props
     return (
       <div className="row">
         {
